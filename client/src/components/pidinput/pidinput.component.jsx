@@ -12,7 +12,19 @@ export const PidInput = () => {
       onChange={nextValue => setValue(nextValue)}
       onReset={() => setValue({pids: ""})}
       //onReset={() => console.log(value)}
-      onSubmit={() => console.log(value)}
+      onSubmit={() => {
+        console.log(value)
+        fetch('http://localhost:8000/eox/', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(value)
+        })
+        .then(res => res.json())
+        .then(res => console.log(res));
+        }
+      }
     >
       <FormField
         name="pids"
