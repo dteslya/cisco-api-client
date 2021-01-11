@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
     Box,
     Button,
-    Text,
     Collapsible,
     Heading,
     Grommet,
@@ -14,6 +13,7 @@ import {
 import { CircleQuestion, FormClose, Github } from 'grommet-icons';
 import { PidInput } from './components/pidinput/pidinput.component';
 import { Help } from './components/help/help.component';
+import { ListEOL } from './components/list/list.component';
 const theme = {
   global: {
     colors: {
@@ -56,6 +56,7 @@ function App() {
         <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
           <Box flex align='center' justify='center'>
               <PidInput />
+              <ListEOL />
           </Box>
           {(!showSidebar || size !== 'small') ? (
             <Collapsible direction="horizontal" open={showSidebar}>
