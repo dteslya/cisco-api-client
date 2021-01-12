@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 from requests.auth import HTTPBasicAuth
-# from pprint import pprint
+
 
 app = FastAPI()
 
@@ -27,6 +27,7 @@ eox_data = {
 
 
 def get_eox_from_cisco(data):
+    """Fetch EOX data from Cisco Support API"""
     print(data)
     client_id = "***REMOVED***"
     client_secret = "***REMOVED***"
@@ -47,16 +48,22 @@ def get_eox_from_cisco(data):
 
 @app.get("/eox/")
 async def list_eox():
+    """Show EOX data"""
+    print("/eox endpoint called with GET method")
     response = eox_data
     print(response)
     return response
 
 
 @app.post("/eox/")
-async def eox(pids: dict):
-    print("/eox endpoint called")
+async def submit_pids(pids: dict):
+    """Submit device product number(s)"""
+    print("/eox endpoint called with POST method")
+
+    # Reset eox_data
+    eox_data["data"].clear()
+    
     fetched_data = get_eox_from_cisco(pids)
-    # eox_data['data'] = fetched_data['EOXRecord']
     for record in fetched_data["EOXRecord"]:
         new_entry = {
             "EOLProductID": record["EOLProductID"],
