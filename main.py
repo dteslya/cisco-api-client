@@ -21,7 +21,13 @@ app.add_middleware(
 
 eox_data = {
     "data": [
-        {"EOLProductID": "", "EOXExternalAnnouncementDate": ""},
+        {
+            "EOLProductID": "",
+            "EOXExternalAnnouncementDate": "",
+            "EndOfSaleDate": "",
+            "LastDateOfSupport": "",
+            "MigrationProductName": "",
+        },
     ]
 }
 
@@ -57,20 +63,37 @@ async def list_eox():
 
 @app.post("/eox/")
 async def submit_pids(pids: dict):
-    """Submit device product number(s)"""
+    """Submit device product number(s) to Cisco Support API"""
     print("/eox endpoint called with POST method")
 
     # Reset eox_data
     eox_data["data"].clear()
-    
+
     fetched_data = get_eox_from_cisco(pids)
     for record in fetched_data["EOXRecord"]:
-        new_entry = {
-            "EOLProductID": record["EOLProductID"],
-            "EOXExternalAnnouncementDate": record["EOXExternalAnnouncementDate"][
-                "value"
-            ],
-        }
+        # If PID is invalid or there is no EOL announced return error
+        # description instead of EOL date
+        if "EOXError" in record:
+            new_entry = {
+                "EOLProductID": record["EOXInputValue"],
+                "EOXExternalAnnouncementDate": record["EOXError"]["ErrorDescription"],
+                "EndOfSaleDate": "N/A",
+                "LastDateOfSupport": "N/A",
+                "MigrationProductName": "N/A",
+            }
+        else:
+            new_entry = {
+                "EOLProductID": record["EOLProductID"],
+                "EOXExternalAnnouncementDate": record["EOXExternalAnnouncementDate"][
+                    "value"
+                ],
+                "EndOfSaleDate": record["EndOfSaleDate"]["value"],
+                "LastDateOfSupport": record["LastDateOfSupport"]["value"],
+                "MigrationProductName": record["EOXMigrationDetails"][
+                    "MigrationProductId"
+                ]
+                + record["EOXMigrationDetails"]["MigrationProductName"],
+            }
         eox_data["data"].append(new_entry)
     print(eox_data)
     response = {"data": ["EOX data fetched"]}
