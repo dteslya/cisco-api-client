@@ -11,7 +11,7 @@ export const Help = () => {
 `## How to use
 
 1. Enter Cisco device PIDs separated by commas
-2. Press "Submit"
+2. Hit "Submit"
 `}
       </Markdown>
     </Box>
