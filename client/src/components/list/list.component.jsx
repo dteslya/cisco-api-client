@@ -40,7 +40,7 @@ export const ListEOL = () => {
             })
         );
     }, [state]);
-    console.log("State:", state);
+    //console.log("State:", state);
     console.log("EOX list:", eoxlist);
     return (
         <Box align="center" pad="large">
