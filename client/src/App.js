@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, createContext, useState } from "react";
 import {
     Box,
     Button,
@@ -11,9 +11,30 @@ import {
     ResponsiveContext,
   } from 'grommet';
 import { CircleQuestion, FormClose, Github } from 'grommet-icons';
-import { PidInput } from './components/pidinput/pidinput.component';
-import { Help } from './components/help/help.component';
-import { ListEOL } from './components/list/list.component';
+import PidInput from './components/pidinput/pidinput.component';
+import Help from './components/help/help.component';
+import ListEOL from './components/list/list.component';
+import Spinner from "./components/spinner/spinner";
+
+// Create context object
+export const AppContext = createContext();
+
+// Set up Initial State
+const initialState = {
+  status: ''
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'UPDATE_EOX_LIST':
+      return {
+        status: action.data
+      };
+    default:
+      return initialState;
+  }
+}
+
 const theme = {
   global: {
     colors: {
@@ -40,6 +61,7 @@ const AppBar = (props) => (
   />
 );
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [showSidebar, setShowSidebar] = useState(false);
   return (
     <Grommet theme={theme} themeMode="dark" full>
@@ -55,8 +77,11 @@ function App() {
         </AppBar>
         <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
           <Box flex align='center' justify='center'>
+            <AppContext.Provider value={{ state, dispatch }}>
               <PidInput />
               <ListEOL />
+              <Spinner />
+            </AppContext.Provider>
           </Box>
           {(!showSidebar || size !== 'small') ? (
             <Collapsible direction="horizontal" open={showSidebar}>

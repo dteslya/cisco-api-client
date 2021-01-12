@@ -1,8 +1,14 @@
-import { React, useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
+import { trackPromise } from 'react-promise-tracker';
 
 import { Box, DataTable, Text } from 'grommet';
 
+// Import Context
+import { AppContext } from '../../App';
+
 export const ListEOL = () => {
+    const [eoxlist, setEoxList] = useState([]);
+    const { state } = useContext(AppContext);
     const columns = [
         {
           property: 'EOLProductID',
@@ -14,20 +20,20 @@ export const ListEOL = () => {
           header: 'EOL Date',
         },
     ]
-    const [state, setState] = useState([]);
     useEffect(() => {
-        async function fetchData() {
-            const res = await fetch("http://localhost:8000/eox/");
-            res
-            .json()
-            .then(res => setState(res.data))
-        }
-        fetchData();
-    }, [])
-    console.log(state);
+        trackPromise(
+          fetch('http://localhost:8000/eox/').then(res => res.json()).then(data => {
+            setEoxList(data.data);
+          })
+        );
+      },[state]);
+    console.log("State:", state);
+    console.log("EOX list:", eoxlist);
         return (
         <Box align="center" pad="large">
-          <DataTable columns={columns} data={state} step={10} />
+          <DataTable columns={columns} data={eoxlist} step={10} />
         </Box>
     );
 }
+
+export default ListEOL;
