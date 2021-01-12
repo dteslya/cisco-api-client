@@ -17,3 +17,4 @@ export const Help = () => {
     </Box>
   )
 }
+export default Help;
