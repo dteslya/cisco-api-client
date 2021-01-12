@@ -12,6 +12,7 @@ export const PidInput = () => {
 
   return (
     <Form
+      validate="blur"
       value={value}
       onChange={nextValue => setValue(nextValue)}
       onReset={() => setValue({pids: ""})}
@@ -22,12 +23,12 @@ export const PidInput = () => {
           headers: {
             'Content-type': 'application/json',
           },
-          body: JSON.stringify(value)
+          body: JSON.stringify(value).replace(/\s/g,'')
+          //body: JSON.stringify(value).replace(/(\r\n|\n|\r)/gim, ",")
         })
         .then(res => res.json())
         .then(res => console.log(res))
-        .then(res => dispatch({ type: 'UPDATE_EOX_LIST', data: res,}))
-        .then(res => console.log("Dispatch here"));
+        .then(res => dispatch({ type: 'UPDATE_EOX_LIST', data: res,}));
         }
       }
     >
@@ -37,8 +38,15 @@ export const PidInput = () => {
         label="Enter Product IDs"
         htmlFor="text-area"
         component={TextArea}
-        placeholder="Enter PID(s)"
+        placeholder="WS-C6506-E,CISCO2901/K9"
         required
+        validate={[
+          { regexp: /^[a-z0-9]*[a-z0-9/-]*\s*,*\s*[a-z0-9]+[a-z0-9/-]*\s*/i },
+          name => {
+            if (name && name.length === 1) return 'must be >1 character';
+            return undefined;
+          },
+        ]}
       />
       <Box direction="row" gap="medium">
         <Button type="submit" primary label="Submit" />
