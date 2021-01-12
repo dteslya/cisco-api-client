@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 
 import { Box, Form, FormField, Button, TextArea} from 'grommet';
 
-export const PidInput = () => {
+// Import Context
+import { AppContext } from '../../App'
 
-  const [value, setValue] = React.useState({});
+export const PidInput = () => {
+  
+  const { dispatch } = useContext(AppContext);
+  const [value, setValue] = useState({});
 
   return (
     <Form
       value={value}
       onChange={nextValue => setValue(nextValue)}
       onReset={() => setValue({pids: ""})}
-      //onReset={() => console.log(value)}
       onSubmit={() => {
         console.log(value)
         fetch('http://localhost:8000/eox/', {
@@ -22,7 +25,9 @@ export const PidInput = () => {
           body: JSON.stringify(value)
         })
         .then(res => res.json())
-        .then(res => console.log(res));
+        .then(res => console.log(res))
+        .then(res => dispatch({ type: 'UPDATE_EOX_LIST', data: res,}))
+        .then(res => console.log("Dispatch here"));
         }
       }
     >
@@ -33,6 +38,7 @@ export const PidInput = () => {
         htmlFor="text-area"
         component={TextArea}
         placeholder="Enter PID(s)"
+        required
       />
       <Box direction="row" gap="medium">
         <Button type="submit" primary label="Submit" />
@@ -42,4 +48,4 @@ export const PidInput = () => {
   );
 }
 
-
+export default PidInput;
