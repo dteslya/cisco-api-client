@@ -9,6 +9,8 @@ import { AppContext } from '../../App';
 export const ListEOL = () => {
     const [eoxlist, setEoxList] = useState([]);
     const { state } = useContext(AppContext);
+
+    // Looks up .env.local file when in development environment
     const backend_url = process.env.REACT_APP_BACKEND_URL;
     const columns = [
         {
@@ -36,12 +38,11 @@ export const ListEOL = () => {
     ]
     useEffect(() => {
         trackPromise(
-            //fetch('http://localhost:8000/eox/').then(res => res.json()).then(data => {
             fetch(`${backend_url}/eox/`).then(res => res.json()).then(data => {
                 setEoxList(data.data);
             })
         );
-    }, [state,backend_url]);
+    }, [state, backend_url]);
     //console.log("State:", state);
     console.log("EOX list:", eoxlist);
     return (

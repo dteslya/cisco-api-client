@@ -1,36 +1,37 @@
 import React, { useState, useContext } from 'react';
 
-import { Box, Form, FormField, Button, TextArea} from 'grommet';
+import { Box, Form, FormField, Button, TextArea } from 'grommet';
 
 // Import Context
 import { AppContext } from '../../App'
 
 export const PidInput = () => {
-  
+
   const { dispatch } = useContext(AppContext);
   const [value, setValue] = useState({});
+
+  // Looks up .env.local file when in development environment
   const backend_url = process.env.REACT_APP_BACKEND_URL;
   return (
     <Form
       validate="blur"
       value={value}
       onChange={nextValue => setValue(nextValue)}
-      onReset={() => setValue({pids: ""})}
+      onReset={() => setValue({ pids: "" })}
       onSubmit={() => {
         console.log(value)
-        //fetch('http://localhost:8000/eox/', {
-          fetch(`${backend_url}/eox/`, {
+        fetch(`${backend_url}/eox/`, {
           method: 'POST',
           headers: {
             'Content-type': 'application/json',
           },
-          body: JSON.stringify(value).replace(/\s/g,'')
+          body: JSON.stringify(value).replace(/\s/g, '')
           //body: JSON.stringify(value).replace(/(\r\n|\n|\r)/gim, ",")
         })
-        .then(res => res.json())
-        .then(res => console.log(res))
-        .then(res => dispatch({ type: 'UPDATE_EOX_LIST', data: res,}));
-        }
+          .then(res => res.json())
+          .then(res => console.log(res))
+          .then(res => dispatch({ type: 'UPDATE_EOX_LIST', data: res, }));
+      }
       }
     >
       <FormField
