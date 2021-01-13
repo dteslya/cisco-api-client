@@ -4,7 +4,8 @@ This simple SPA allows you to retrieve End Of Life info about Cisco products. It
 # Deployment
 ## Local
 To run this app locally you need to start FastAPI backend and React frontend processes.
-**Backend**
+
+**Backend**  
 1. Clone this repo somewhere on your computer: `git clone https://github.com/dteslya/cisco-api`
 2. `cd cisco-api`
 3. Install the required dependencies: `pip install -r requirements.txt`
@@ -16,7 +17,8 @@ To run this app locally you need to start FastAPI backend and React frontend pro
    ```
    For some reason, my frontend was unable to access the backend when I specified localhost URIs as an allowed origin. To mitigate this you can use `export ALLOWED_ORIGINS=["*"]`
 5. Start the backend process: `uvicorn main:app --reload`
-**Frontend**
+
+**Frontend**  
 1. `cd client`
 2. Create `.env.local` file and put the following line there: `REACT_APP_BACKEND_URL=http://localhost:8000`
 3. Run `npm start`
