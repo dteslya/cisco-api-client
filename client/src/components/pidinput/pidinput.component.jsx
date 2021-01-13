@@ -9,7 +9,7 @@ export const PidInput = () => {
   
   const { dispatch } = useContext(AppContext);
   const [value, setValue] = useState({});
-
+  const backend_url = process.env.REACT_APP_BACKEND_URL;
   return (
     <Form
       validate="blur"
@@ -18,7 +18,8 @@ export const PidInput = () => {
       onReset={() => setValue({pids: ""})}
       onSubmit={() => {
         console.log(value)
-        fetch('http://localhost:8000/eox/', {
+        //fetch('http://localhost:8000/eox/', {
+          fetch(`${backend_url}/eox/`, {
           method: 'POST',
           headers: {
             'Content-type': 'application/json',
