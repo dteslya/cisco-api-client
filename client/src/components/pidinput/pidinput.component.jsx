@@ -19,6 +19,7 @@ export const PidInput = () => {
       onChange={nextValue => setValue(nextValue)}
       onReset={() => setValue({ pids: "" })}
       onSubmit={() => {
+        setEoxdata([])
         trackPromise(
           fetch(`${backend_url}/eox/`, {
             method: 'POST',
