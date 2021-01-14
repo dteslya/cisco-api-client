@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { trackPromise } from 'react-promise-tracker';
+import React, { useContext } from 'react';
 
 import { Box, DataTable } from 'grommet';
 
@@ -7,11 +6,8 @@ import { Box, DataTable } from 'grommet';
 import { AppContext } from '../../App';
 
 export const ListEOL = () => {
-    //const [eoxlist, setEoxList] = useState([]);
-    const { state } = useContext(AppContext);
+    const eoxdata = useContext(AppContext);
 
-    // Looks up .env.local file when in development environment
-    const backend_url = process.env.REACT_APP_BACKEND_URL;
     const columns = [
         {
             property: 'EOLProductID',
@@ -36,18 +32,10 @@ export const ListEOL = () => {
         }
 
     ]
-    //useEffect(() => {
-    //    trackPromise(
-    //        fetch(`${backend_url}/eox/`).then(res => res.json()).then(data => {
-    //            setEoxList(data.data);
-    //        })
-    //    );
-    //}, [state, backend_url]);
-    //console.log("State:", state);
-    console.log("EOX list:", state);
+    //console.log("EOX list:", eoxdata);
     return (
         <Box align="center" pad="large">
-            <DataTable columns={columns} data={state.status.data} step={10} />
+            <DataTable columns={columns} data={eoxdata.eoxdata} step={10} />
         </Box>
     );
 }
