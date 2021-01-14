@@ -7,7 +7,7 @@ import { AppContext } from '../../App'
 
 export const PidInput = () => {
 
-  const { dispatch } = useContext(AppContext);
+  const { setEoxdata } = useContext(AppContext);
   const [value, setValue] = useState({});
 
   // Looks up .env.local file when in development environment
@@ -30,7 +30,7 @@ export const PidInput = () => {
           //body: JSON.stringify(value).replace(/(\r\n|\n|\r)/gim, ",")
         })
           .then(res => res.json())
-          .then(res => dispatch({ type: 'UPDATE_EOX_LIST', data: res.data, }))
+          .then(setEoxdata)
       }
       }
     >
