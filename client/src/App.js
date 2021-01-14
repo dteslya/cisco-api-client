@@ -1,4 +1,4 @@
-import React, { useReducer, createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import {
     Box,
     Button,
@@ -18,22 +18,6 @@ import Spinner from "./components/spinner/spinner";
 
 // Create context object
 export const AppContext = createContext();
-
-// Set up Initial State
-const initialState = {
-  status: ''
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'UPDATE_EOX_LIST':
-      return {
-        status: action.data
-      };
-    default:
-      return initialState;
-  }
-}
 
 const theme = {
   global: {
@@ -61,7 +45,7 @@ const AppBar = (props) => (
   />
 );
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [eoxdata, setEoxdata] = useState([]);
   const [showSidebar, setShowSidebar] = useState(false);
   return (
     <Grommet theme={theme} themeMode="dark" full>
@@ -77,7 +61,7 @@ function App() {
         </AppBar>
         <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
           <Box flex align='center' justify='center'>
-            <AppContext.Provider value={{ state, dispatch }}>
+            <AppContext.Provider value={{ eoxdata, setEoxdata }}>
               <PidInput />
               <ListEOL />
               <Spinner />
