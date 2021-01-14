@@ -27,9 +27,9 @@ export const PidInput = () => {
               headers: {
                 'Content-type': 'application/json',
               },
-              // remove spaces from input
-              body: JSON.stringify(value).replace(/\s/g, '')
-              //body: JSON.stringify(value).replace(/(\r\n|\n|\r)/gim, ",")
+              // Remove spaces and newlines from input. 
+              // Note that JSON.stringify escapes newlines (e.g. \n becomes \\n)
+              body: JSON.stringify(value).replace(/\s/g, '').replace(/(\\r\\n|\\n|\\r)/gm, ",")
             })
               .then(res => res.json())
               .then(setEoxdata)
