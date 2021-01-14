@@ -14,35 +14,17 @@ CISCO_API_CLIENT_SECRET = os.getenv("CISCO_API_CLIENT_SECRET")
 
 app = FastAPI()
 
-#origins = ["http://localhost:3000/", "localhost:3000", "http://localhost"]
-print(ALLOWED_ORIGINS)
-
 app.add_middleware(
     CORSMiddleware,
-    # allow_origins=origins,
     allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["POST", "GET"],
     allow_headers=["*"],
 )
 
-eox_data = {
-    "data": [
-        {
-            "EOLProductID": "",
-            "EOXExternalAnnouncementDate": "",
-            "EndOfSaleDate": "",
-            "LastDateOfSupport": "",
-            "MigrationProductName": "",
-        },
-    ]
-}
-
 
 def get_eox_from_cisco(data):
     """Fetch EOX data from Cisco Support API"""
-    # client_id = "fzgb3yyr6kvv5nfv8d2rzz5g"
-    # client_secret = "J4ESuMDjx2RarAqQK59qQbYR"
 
     baseurl = "https://api.cisco.com/supporttools/eox/rest/5/EOXByProductID/1"
 
@@ -57,20 +39,11 @@ def get_eox_from_cisco(data):
     return response.json()
 
 
-@app.get("/eox/")
-async def list_eox():
-    """Show EOX data"""
-    response = eox_data
-    print(response)
-    return response
-
-
 @app.post("/eox/")
 async def submit_pids(pids: dict):
     """Submit device product number(s) to Cisco Support API"""
 
-    # Reset eox_data
-    eox_data["data"].clear()
+    eox_data = {"data": []}
 
     fetched_data = get_eox_from_cisco(pids)
     for record in fetched_data["EOXRecord"]:
@@ -98,5 +71,5 @@ async def submit_pids(pids: dict):
                 + record["EOXMigrationDetails"]["MigrationProductName"],
             }
         eox_data["data"].append(new_entry)
-    response = {"data": ["EOX data fetched"]}
+    response = eox_data["data"]
     return response
