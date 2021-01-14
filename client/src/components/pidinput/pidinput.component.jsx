@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 
 import { Box, Form, FormField, Button, TextArea } from 'grommet';
-
+import { trackPromise } from 'react-promise-tracker';
 // Import Context
 import { AppContext } from '../../App'
 
@@ -19,18 +19,19 @@ export const PidInput = () => {
       onChange={nextValue => setValue(nextValue)}
       onReset={() => setValue({ pids: "" })}
       onSubmit={() => {
-        console.log(value)
-        fetch(`${backend_url}/eox/`, {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          // remove spaces from input
-          body: JSON.stringify(value).replace(/\s/g, '')
-          //body: JSON.stringify(value).replace(/(\r\n|\n|\r)/gim, ",")
-        })
-          .then(res => res.json())
-          .then(setEoxdata)
+        trackPromise(
+          fetch(`${backend_url}/eox/`, {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+            },
+            // remove spaces from input
+            body: JSON.stringify(value).replace(/\s/g, '')
+            //body: JSON.stringify(value).replace(/(\r\n|\n|\r)/gim, ",")
+          })
+            .then(res => res.json())
+            .then(setEoxdata)
+        )
       }
       }
     >
