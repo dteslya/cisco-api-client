@@ -28,7 +28,7 @@ function reducer(state, action) {
   switch (action.type) {
     case 'UPDATE_EOX_LIST':
       return {
-        status: action.data
+        status: action
       };
     default:
       return initialState;

@@ -7,7 +7,7 @@ import { Box, DataTable } from 'grommet';
 import { AppContext } from '../../App';
 
 export const ListEOL = () => {
-    const [eoxlist, setEoxList] = useState([]);
+    //const [eoxlist, setEoxList] = useState([]);
     const { state } = useContext(AppContext);
 
     // Looks up .env.local file when in development environment
@@ -36,18 +36,18 @@ export const ListEOL = () => {
         }
 
     ]
-    useEffect(() => {
-        trackPromise(
-            fetch(`${backend_url}/eox/`).then(res => res.json()).then(data => {
-                setEoxList(data.data);
-            })
-        );
-    }, [state, backend_url]);
+    //useEffect(() => {
+    //    trackPromise(
+    //        fetch(`${backend_url}/eox/`).then(res => res.json()).then(data => {
+    //            setEoxList(data.data);
+    //        })
+    //    );
+    //}, [state, backend_url]);
     //console.log("State:", state);
-    console.log("EOX list:", eoxlist);
+    console.log("EOX list:", state);
     return (
         <Box align="center" pad="large">
-            <DataTable columns={columns} data={eoxlist} step={10} />
+            <DataTable columns={columns} data={state.status.data} step={10} />
         </Box>
     );
 }
