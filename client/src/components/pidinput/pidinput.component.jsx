@@ -25,12 +25,12 @@ export const PidInput = () => {
           headers: {
             'Content-type': 'application/json',
           },
+          // remove spaces from input
           body: JSON.stringify(value).replace(/\s/g, '')
           //body: JSON.stringify(value).replace(/(\r\n|\n|\r)/gim, ",")
         })
           .then(res => res.json())
-          .then(res => console.log(res))
-          .then(res => dispatch({ type: 'UPDATE_EOX_LIST', data: res, }));
+          .then(res => dispatch({ type: 'UPDATE_EOX_LIST', data: res.data, }))
       }
       }
     >
