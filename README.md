@@ -29,7 +29,7 @@ I host the backend on Heroku and the frontend on Netlify (both free accounts). T
 # Usage
 To perform a request you must enter one or more Cisco product numbers into the input field. Product numbers can be separated by commas and/or new lines. Using wildcards is also supported.
 ## Examples of valid requests:
-* One PN
+* Single PN
   `asr1001`
 * Several PNs
   ```
