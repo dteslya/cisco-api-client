@@ -25,3 +25,17 @@ To run this app locally you need to start FastAPI backend and React frontend pro
 
 ## Heroku & Netlify
 I host the backend on Heroku and the frontend on Netlify (both free accounts). The deployment process is pretty straightforward. Don't forget to specify environment variables in the dashboard. [Here](https://medium.com/better-programming/why-you-should-add-environment-variables-to-netlify-sites-bae57012cc74) is a good tutorial for Netlify, and [this](https://devcenter.heroku.com/articles/config-vars) is for Heroku.
+
+# Usage
+To perform a request you must enter one or more Cisco product numbers into the input field. Product numbers can be separated by commas and/or new lines. Using wildcards is also supported.
+## Examples of valid requests:
+* One PN
+  `asr1001`
+* Several PNs
+  ```asr1001, cisco2911/k9
+  ws-c6506-e```
+* Using wildcards:
+  `asr10*, ws-c3550*`
+
+# Known Issues
+Currently, response pagination is not supported. If a Cisco Support API returns a paginated response, only the results from the first page will be fetched.
