@@ -13,7 +13,7 @@ export const PidInput = () => {
   // Looks up .env.local file when in development environment
   const backend_url = process.env.REACT_APP_BACKEND_URL;
   return (
-    <Box width="medium">
+    <Box width="medium" fill="horizontal" pad="medium">
       <Form
         validate="blur"
         value={value}
