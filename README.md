@@ -32,8 +32,10 @@ To perform a request you must enter one or more Cisco product numbers into the i
 * One PN
   `asr1001`
 * Several PNs
-  ```asr1001, cisco2911/k9
-  ws-c6506-e```
+  ```
+  asr1001, cisco2911/k9
+  ws-c6506-e
+  ```
 * Using wildcards:
   `asr10*, ws-c3550*`
 
