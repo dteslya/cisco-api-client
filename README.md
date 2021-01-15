@@ -1,6 +1,7 @@
 # Cisco Support API client
 This simple SPA allows you to retrieve End Of Life info about Cisco products. It uses [Cisco Support API](https://developer.cisco.com/site/support-apis/) under the hood, so first, you need to acquire access to that API. This process is covered in my [blog post](https://dteslya.engineer/using_cisco_support_api_with_postman/).
 
+![Demo](https://media.giphy.com/media/blZIxOhv9OWXBqhs8s/giphy.gif)
 # Deployment
 ## Local
 To run this app locally you need to start FastAPI backend and React frontend processes.
