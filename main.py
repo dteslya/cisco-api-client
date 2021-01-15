@@ -72,7 +72,7 @@ async def submit_pids(pids: dict):
                 "MigrationProductName": record["EOXMigrationDetails"][
                     "MigrationProductId"
                 ]
-                + record["EOXMigrationDetails"]["MigrationProductName"],
+                + " " + record["EOXMigrationDetails"]["MigrationProductName"],
             }
         eox_data["data"].append(new_entry)
     response = eox_data["data"]
