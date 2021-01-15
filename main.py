@@ -18,7 +18,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["POST", "GET"],
+    allow_methods=["POST"],
     allow_headers=["*"],
 )
 
@@ -46,7 +46,6 @@ async def submit_pids(pids: dict):
     eox_data = {"data": []}
 
     fetched_data = get_eox_from_cisco(pids)
-    print(fetched_data["PaginationResponseRecord"])
     key = 0
     for record in fetched_data["EOXRecord"]:
         # If PID is invalid or there is no EOL announced return error
