@@ -46,11 +46,15 @@ async def submit_pids(pids: dict):
     eox_data = {"data": []}
 
     fetched_data = get_eox_from_cisco(pids)
+    print(fetched_data["PaginationResponseRecord"])
+    key = 0
     for record in fetched_data["EOXRecord"]:
         # If PID is invalid or there is no EOL announced return error
         # description instead of EOL date
+        key += 1
         if "EOXError" in record:
             new_entry = {
+                "key": key,
                 "EOLProductID": record["EOXInputValue"],
                 "EOXExternalAnnouncementDate": record["EOXError"]["ErrorDescription"],
                 "EndOfSaleDate": "N/A",
@@ -59,6 +63,7 @@ async def submit_pids(pids: dict):
             }
         else:
             new_entry = {
+                "key": key,
                 "EOLProductID": record["EOLProductID"],
                 "EOXExternalAnnouncementDate": record["EOXExternalAnnouncementDate"][
                     "value"
