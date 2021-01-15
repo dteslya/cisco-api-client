@@ -25,6 +25,3 @@ To run this app locally you need to start FastAPI backend and React frontend pro
 
 ## Heroku & Netlify
 I host the backend on Heroku and the frontend on Netlify (both free accounts). The deployment process is pretty straightforward. Don't forget to specify environment variables in the dashboard. [Here](https://medium.com/better-programming/why-you-should-add-environment-variables-to-netlify-sites-bae57012cc74) is a good tutorial for Netlify, and [this](https://devcenter.heroku.com/articles/config-vars) is for Heroku.
-
-# Known issues
-Currently, there is no session support on the backend. This causes the data to persist between different user sessions. For example, User1 makes a request about Product1 and gets a reply. Then when User2 opens the app they see the same reply made for User1 in the EOL table.
