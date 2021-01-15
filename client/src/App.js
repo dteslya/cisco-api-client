@@ -106,7 +106,7 @@ function App() {
           )}
         </Box>
         <Footer justify="center" background="brand" pad="small">
-          <Anchor href="https://github.com/dteslya/cisco-api" target="_blank"><Github /></Anchor>
+          <Anchor href="https://github.com/dteslya/cisco-api-client" target="_blank"><Github /></Anchor>
         </Footer>
       </Box>
       )}
