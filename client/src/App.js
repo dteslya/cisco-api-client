@@ -11,7 +11,7 @@ import {
   ResponsiveContext,
 } from 'grommet';
 import { CircleQuestion, FormClose, Github } from 'grommet-icons';
-import PidInput from './components/pidinput/pidinput.component';
+import PidInput from './components/pidInput/pidInput.component';
 import Help from './components/help/help.component';
 import ListEOL from './components/list/list.component';
 
@@ -62,7 +62,7 @@ function App() {
               <Box flex align='center' justify='center'>
                 <AppContext.Provider value={{ eoxdata, setEoxdata }}>
                   <PidInput />
-                    <ListEOL />
+                  <ListEOL />
                 </AppContext.Provider>
               </Box>
               {(!showSidebar || size !== 'small') ? (
