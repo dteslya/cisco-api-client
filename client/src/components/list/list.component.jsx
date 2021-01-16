@@ -47,55 +47,45 @@ export const ListEOL = () => {
     }
 
   ]
+
   return (
     <Box align="center" fill="horizontal" pad="medium" flex>
-      { promiseInProgress ? (
-        <DataTable
-          columns={columns.map(c => ({
-            ...c,
-            search: c.property === 'EOLProductID',
-          }))}
-          data={eoxdata.eoxdata}
-          step={step}
-          size="medium"
-          sortable
-          placeholder={
+      <DataTable
+        columns={columns.map(c => ({
+          ...c,
+          search: c.property === 'EOLProductID',
+        }))}
+        data={eoxdata.eoxdata}
+        step={step}
+        size="medium"
+        sortable
+        // show spinner when loading
+        placeholder={promiseInProgress ? (
+          <Box
+            fill
+            align="center"
+            justify="center"
+            direction="row"
+            pad="large"
+            gap="small"
+            background={{ color: 'background-front', opacity: 'strong' }}
+          >
             <Box
-              fill
-              align="center"
-              justify="center"
               direction="row"
-              pad="large"
-              gap="small"
-              background={{ color: 'background-front', opacity: 'strong' }}
-            >
-              <Box
-                direction="row"
-                border={[
-                  { side: 'all', color: 'transparent', size: 'medium' },
-                  { side: 'horizontal', color: 'brand', size: 'medium' },
-                ]}
-                pad="small"
-                round="full"
-                animation={{ type: 'rotateRight', duration: 1500 }}
-              />
-              <Text weight="bold">Loading ...</Text>
-            </Box>
-          }
-          onMore={() => { console.log(`InfiniteScroll fires onMore after loading ${step} items`) }} />
-      ) : (
-          <DataTable
-            columns={columns.map(c => ({
-              ...c,
-              search: c.property === 'EOLProductID',
-            }))}
-            data={eoxdata.eoxdata}
-            step={step}
-            size="medium"
-            sortable
-            onMore={() => { console.log(`InfiniteScroll fires onMore after loading ${step} items`) }} />
-        )
-      }
+              border={[
+                { side: 'all', color: 'transparent', size: 'medium' },
+                { side: 'horizontal', color: 'brand', size: 'medium' },
+              ]}
+              pad="small"
+              round="full"
+              animation={{ type: 'rotateRight', duration: 1500 }}
+            />
+            <Text weight="bold">Loading ...</Text>
+          </Box>
+        ) : (undefined)
+
+        }
+        onMore={() => { console.log(`InfiniteScroll fires onMore after loading ${step} items`) }} />
     </Box>
   );
 }
