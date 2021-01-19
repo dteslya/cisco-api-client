@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
-import { Text, Box, DataTable } from 'grommet';
-
+import { Layer, Text, Box, DataTable } from 'grommet';
+import { StatusCritical } from 'grommet-icons'
 // Import Context
 import { AppContext } from '../../App';
 import { usePromiseTracker } from 'react-promise-tracker';
@@ -49,53 +49,70 @@ export const ListEOL = () => {
   ]
   return (
     <Box align="center" fill="horizontal" pad="medium" flex>
-      { promiseInProgress ? (
-        <DataTable
-          columns={columns.map(c => ({
-            ...c,
-            search: c.property === 'EOLProductID',
-          }))}
-          data={eoxdata.eoxdata}
-          step={step}
-          size="medium"
-          sortable
-          placeholder={
-            <Box
-              fill
-              align="center"
-              justify="center"
-              direction="row"
-              pad="large"
-              gap="small"
-              background={{ color: 'background-front', opacity: 'strong' }}
+      <DataTable
+        columns={columns.map(c => ({
+          ...c,
+          search: c.property === 'EOLProductID',
+        }))}
+        data={Array.isArray(eoxdata.eoxdata) ? eoxdata.eoxdata : []}
+        step={step}
+        size="medium"
+        sortable
+        // show spinner when loading and error message if failed to load
+        placeholder={
+          !Array.isArray(eoxdata.eoxdata) ? (
+            <Layer
+              position="center"
+              modal={false}
+              margin={{ vertical: 'medium', horizontal: 'small' }}
+              responsive={false}
+              plain
             >
               <Box
+                align="center"
                 direction="row"
-                border={[
-                  { side: 'all', color: 'transparent', size: 'medium' },
-                  { side: 'horizontal', color: 'brand', size: 'medium' },
-                ]}
-                pad="small"
-                round="full"
-                animation={{ type: 'rotateRight', duration: 1500 }}
-              />
-              <Text weight="bold">Loading ...</Text>
-            </Box>
-          }
-          onMore={() => { console.log(`InfiniteScroll fires onMore after loading ${step} items`) }} />
-      ) : (
-          <DataTable
-            columns={columns.map(c => ({
-              ...c,
-              search: c.property === 'EOLProductID',
-            }))}
-            data={eoxdata.eoxdata}
-            step={step}
-            size="medium"
-            sortable
-            onMore={() => { console.log(`InfiniteScroll fires onMore after loading ${step} items`) }} />
-        )
-      }
+                gap="small"
+                justify="between"
+                round="medium"
+                elevation="medium"
+                pad={{ vertical: 'xsmall', horizontal: 'small' }}
+                background="status-critical"
+              >
+                <Box align="center" direction="row" gap="xsmall">
+                  <StatusCritical />
+                  <Text weight="bold">
+                    Error fetching data
+                  </Text>
+                </Box>
+              </Box>
+            </Layer>
+          )
+            : promiseInProgress ? (
+              <Box
+                fill
+                align="center"
+                justify="center"
+                direction="row"
+                pad="large"
+                gap="small"
+                background={{ color: 'background-front', opacity: 'strong' }}
+              >
+                <Box
+                  direction="row"
+                  border={[
+                    { side: 'all', color: 'transparent', size: 'medium' },
+                    { side: 'horizontal', color: 'brand', size: 'medium' },
+                  ]}
+                  pad="small"
+                  round="full"
+                  animation={{ type: 'rotateRight', duration: 1500 }}
+                />
+                <Text weight="bold">Loading ...</Text>
+              </Box>
+            )
+              : undefined
+        }
+        onMore={() => { console.log(`InfiniteScroll fires onMore after loading ${step} items`) }} />
     </Box>
   );
 }

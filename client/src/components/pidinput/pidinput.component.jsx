@@ -12,6 +12,10 @@ export const PidInput = () => {
 
   // Looks up .env.local file when in development environment
   const backend_url = process.env.REACT_APP_BACKEND_URL;
+  function handleErrors(res) {
+    if (!res.ok) throw new Error(res.error);
+    return res;
+  }
   return (
     <Box width="medium" fill="horizontal" pad="medium">
       <Form
@@ -31,8 +35,13 @@ export const PidInput = () => {
               // Note that JSON.stringify escapes newlines (e.g. \n becomes \\n)
               body: JSON.stringify(value).replace(/\s/g, '').replace(/(\\r\\n|\\n|\\r)/gm, ",")
             })
+              .then(handleErrors)
               .then(res => res.json())
               .then(setEoxdata)
+              .catch(error => {
+                console.log(error)
+                setEoxdata(error)
+              })
           )
         }
         }
