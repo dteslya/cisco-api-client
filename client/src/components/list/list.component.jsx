@@ -58,17 +58,13 @@ export const ListEOL = () => {
         step={step}
         size="medium"
         sortable
-        // show spinner when loading
+        // show spinner when loading and error message if failed to load
         placeholder={
           !Array.isArray(eoxdata.eoxdata) ? (
-            //<Box>
-            //  <StatusCritical /><Text weight="bold">Error fetching data</Text>
-            //</Box>
             <Layer
-              //position="top"
+              position="center"
               modal={false}
               margin={{ vertical: 'medium', horizontal: 'small' }}
-              //onEsc={onClose}
               responsive={false}
               plain
             >
